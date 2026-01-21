@@ -61,89 +61,10 @@
 
   <div class="feed" id="feed"></div>
 
-  <script>
-    const API_URL =
-      "https://script.google.com/macros/s/AKfycbwnKCGF9XAjkUBjjy9UfSL7M1cKT7PJijeV98Sh2XMUBjPmxwwmKkIZExxL3L_MDdA8dw/exec
-";
-
-    const feed = document.getElementById("feed");
-
-    let loopHeight = 0;
-    let isAdjusting = false;
-
-    fetch(API_URL)
-      .then(res => res.json())
-      .then(items => {
-        // 新しい順に並び替え
-        items.sort(
-          (a, b) => new Date(b.timestamp) - new Date(a.timestamp)
-        );
-
-        // 1セット目
-        items.forEach(item => {
-          feed.appendChild(createItem(item));
-        });
-
-        // 2セット目（コピー）
-        items.forEach(item => {
-          feed.appendChild(createItem(item));
-        });
-
-        // 画像読み込み後に高さ確定
-        waitForImages().then(() => {
-          loopHeight = feed.scrollHeight / 2;
-        });
-
-        feed.addEventListener("scroll", onScroll);
-      });
-
-    function onScroll() {
-      if (isAdjusting || !loopHeight) return;
-
-      // 後半に十分入ったら静かに巻き戻す
-      if (feed.scrollTop > loopHeight * 1.1) {
-        isAdjusting = true;
-        feed.scrollTop -= loopHeight;
-
-        requestAnimationFrame(() => {
-          isAdjusting = false;
-        });
-      }
-    }
-
-    function createItem(item) {
-      const wrapper = document.createElement("div");
-      wrapper.className = "item";
-
-      const img = document.createElement("img");
-      img.src = item.image_url;
-      img.loading = "lazy";
-
-      const time = document.createElement("div");
-      time.className = "timestamp";
-      time.textContent =
-        new Date(item.timestamp).toLocaleString("ja-JP");
-
-      wrapper.append(img, time);
-      return wrapper;
-    }
-
-    function waitForImages() {
-      const imgs = document.images;
-      const promises = [];
-
-      for (const img of imgs) {
-        if (img.complete) continue;
-        promises.push(
-          new Promise(resolve => {
-            img.onload = img.onerror = resolve;
-          })
-        );
-      }
-
-      return Promise.all(promises);
-    }
-  </script>
+<script>
+  document.getElementById("feed").innerHTML =
+    "<p style='padding:20px'>JSは動いています</p>";
+</script>
 
 </body>
 </html>
