@@ -7,15 +7,25 @@
   <style>
     body {
       margin: 0;
-      padding: 5px;
+      padding: 16px;
       font-family: system-ui, sans-serif;
       background: #ffffff;
     }
 
-    .feed {
-      max-width: 720px;
-      margin: 0 auto;
-    }
+   @media (max-width: 600px) {
+  body {
+    padding: 0;        /* 余白を消す */
+  }
+
+  .feed {
+    max-width: none;   /* 幅制限を解除 */
+    margin: 0;
+  }
+
+  .item {
+    margin-bottom: 24px;
+  }
+}
 
     .item {
       margin-bottom: 32px;
